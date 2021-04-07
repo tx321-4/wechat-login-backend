@@ -1,0 +1,6 @@
+{
+    "require": {
+        "symfony/cache": "^4.4",
+        "overtrue/wechat": "~4.0"
+    }
+}
