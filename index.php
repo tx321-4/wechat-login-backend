@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: text/html;charset=utf-8');
-header('Access-Control-Allow-Origin:http://localhost:8080'); // *代表允许任何网址请求
+header('Access-Control-Allow-Origin:http://wxl2.liumianti.top'); // *代表允许任何网址请求
 header('Access-Control-Allow-Methods:POST,GET,OPTIONS,DELETE'); // 允许请求的类型
 header('Access-Control-Allow-Credentials: true'); // 设置是否允许发送 cookies
 header('Access-Control-Allow-Headers: Content-Type,Content-Length,Accept-Encoding,X-Requested-with, Origin'); // 设置允许自定义请求头的字段
@@ -72,7 +72,8 @@ function loginInit($key, $openId)
   }
   $con = getCon();
   $result = mysqli_query($con, "select id from users where openid='$openId'");
-  if (!$result) {
+  $user = mysqli_fetch_assoc($result);
+  if (!$user['id']) {
     try {
       $app = getWechatApp();
       $user = $app->user->get($openId);
@@ -81,15 +82,15 @@ function loginInit($key, $openId)
     }
     $nickname = $user['nickname'];
     $avatarUrl = $user['headimgurl'];
-    $result = mysqli_query($con, "insert into users(nickname, avatar_url, openid')values ('$nickname','$avatarUrl','$openId')");
+    $result = mysqli_query($con, "insert into users(nick_name, avatar_url, openid)values ('$nickname','$avatarUrl','$openId')");
     if (!$result) {
       return false;
     }
     $uid = mysqli_insert_id();
+  }else{
+    $uid = $user['id'];
   }
-  $user = mysqli_fetch_assoc($result);
-  $uid = $user['id'];
-  return $cache->set($key, $uid);
+  return $cache->set($key, $uid, 60);
 }
 function getCon()
 {
@@ -140,4 +141,27 @@ if ('login' == $type) {
 if ('notify' == $type) {
   // echo $_GET['echostr']; //接口配置信息 验证
   responseMsg();
+}
+if ('session' == $type) {
+  session_start();
+  $userId = $_SESSION['userId'];
+  echo $userId;
+}
+
+
+if('autoLogin' == $type){
+  session_start();
+  $userId = $_SESSION['userId'];
+  $con = getCon();
+  $result = mysqli_query($con, "select id,nick_name,avatar_url from users where id='$userId'");
+  $user = mysqli_fetch_assoc($result);
+  if(!$userId){
+    response(-1, $userId);
+  }
+  response(0, 'success',[
+    'userInfo' => [
+      'nickName' => $user['nick_name'],
+      'avatarUrl' => $user['avatar_url']
+    ]
+  ]);
 }
