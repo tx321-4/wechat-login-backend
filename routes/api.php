@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,3 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/getQrcode','IndexController@getQrcode');
+Route::get('/login', 'IndexController@login');
+Route::get('/autoLogin', 'IndexController@autoLogin')->middleware('auth.test');
+Route::get('/getUcenter', 'IndexController@getUcenter')->middleware('auth.test');
+Route::match(['get','post'],'/notify', 'IndexController@notify');

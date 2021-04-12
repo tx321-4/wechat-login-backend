@@ -162,7 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         \App\Providers\WechatServiceProvider::class,
-
+        Fruitcake\Cors\CorsServiceProvider::class,
         /*
          * Package Service Providers...
          */
