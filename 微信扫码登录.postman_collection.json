@@ -1,0 +1,148 @@
+{
+	"info": {
+		"_postman_id": "936c6d63-1b73-41a2-9647-95e16f0aa0cf",
+		"name": "微信扫码登录",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "获取登陆二维码",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}/index.php?type=getQrcode",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"index.php"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "getQrcode"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "轮询登陆",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}/index.php?type=login&key=16178508234365",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"index.php"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "login"
+						},
+						{
+							"key": "key",
+							"value": "16178508234365"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取用户信息(自动登陆)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}/index.php?type=autoLogin",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"index.php"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "autoLogin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取登陆二维码-Laravel",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{server2}}/api/getQrcode"
+			},
+			"response": []
+		},
+		{
+			"name": "轮询登陆-Laravel",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server2}}/api/login?key=Hqoxgt16WvXz7FYO",
+					"host": [
+						"{{server2}}"
+					],
+					"path": [
+						"api",
+						"login"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "Hqoxgt16WvXz7FYO"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "接口配置-Laravel",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server2}}/api/notify?echostr=123",
+					"host": [
+						"{{server2}}"
+					],
+					"path": [
+						"api",
+						"notify"
+					],
+					"query": [
+						{
+							"key": "echostr",
+							"value": "123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取用户信息(自动登陆)-Laravel",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{server2}}/api/autoLogin"
+			},
+			"response": []
+		}
+	]
+}
